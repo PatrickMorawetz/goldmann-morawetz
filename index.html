@@ -12,51 +12,29 @@
 /* Goldmann & Morawetz · Website-Prototyp
    Leitidee: laut durch Maß, nicht durch Wackeln. Das Bild steht im Zentrum, das Logo ist das
    einzige unregelmäßige Element. Anybody: schmal und schwarz für Überschriften, normal für Text.
-   Nur Anthrazit und Creme; Farbe kommt aus den Bildern. Text arbeitet auch mit Lage (90 Grad). */
+   Farben wie die Logo-Fassung „zwei Namen“: Creme, Schwarz, Kadmium (Kadmium nie als kleine Schrift auf Creme).
+   Kleine Texte und Links sitzen in geraden Kästen wie der Kasten ums Logo und der Werkstempel. */
 :root {
   --creme: #ECE6D6;
-  --anthrazit: #2B2A28;
-  --papier: #FAFAF8;
-  --preussisch: #10304D;
-  --ultramarin: #2B44C2;
-  --kadmium: #E07A12;
   --schwarz: #141414;
-  --zitron: #E8E04A;
-  --nacht: #0B2236;
-  /* Rollen: Fassung A (Anthrazit/Creme) ist Standard, B und C über den Prototyp-Schalter */
+  --kadmium: #E07A12;
   --grund: var(--creme);
-  --text: var(--anthrazit);
-  --linie: rgba(43, 42, 40, .3);
-  --dunkel: var(--anthrazit);
+  --text: var(--schwarz);
+  --linie: rgba(20, 20, 20, .3);
+  --dunkel: var(--schwarz);
   --hell: var(--creme);
-  --band-grund: var(--anthrazit);
-  --band-text: var(--creme);
-  --band-titel: var(--creme);
-  --akzent: currentColor;
+  --akzent: var(--kadmium);
   --schrift: "Anybody", "Helvetica Neue", Arial, sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px), 3vw);
   --gutter-r: max(16px, env(safe-area-inset-right, 0px), 3vw);
   color-scheme: light;
 }
-/* B: Papier, Preußisch, Kadmium. Orange nur groß auf Preußisch (4,5:1), auf Papier fällt es durch (2,9:1). */
-body.farbe-b { --logo-g: var(--kadmium); --logo-m: var(--kadmium); --grund: var(--papier); --text: var(--preussisch); --linie: rgba(16, 48, 77, .3); --dunkel: var(--preussisch); --hell: var(--papier); --band-grund: var(--preussisch); --band-text: var(--papier); --band-titel: var(--kadmium); --akzent: var(--kadmium); }
-/* C: Papier, Ultramarin, Kadmium. Werkstatt-Band als Kadmium-Fläche mit dunkler Schrift (5,5:1). */
-body.farbe-c { --grund: var(--papier); --text: var(--ultramarin); --linie: rgba(43, 68, 194, .3); --dunkel: var(--ultramarin); --hell: var(--papier); --band-grund: var(--kadmium); --band-text: var(--anthrazit); --band-titel: var(--anthrazit); --akzent: var(--kadmium); }
-/* D: Papier, Anthrazit, Kadmium-Flächen im Kopf und Fuß (Anthrazit auf Kadmium 4,75:1) */
-body.farbe-d { --grund: var(--papier); --text: var(--anthrazit); --dunkel: var(--kadmium); --hell: var(--anthrazit); --band-grund: var(--anthrazit); --band-text: var(--creme); --band-titel: var(--kadmium); --akzent: var(--anthrazit); }
-/* E: Zwei Namen. Creme, Schwarz, Kadmium wie die Logo-Fassung „zwei Namen“ */
-body.farbe-e { --logo-g: var(--kadmium); --grund: var(--creme); --text: var(--schwarz); --linie: rgba(20, 20, 20, .3); --dunkel: var(--schwarz); --hell: var(--creme); --band-grund: var(--schwarz); --band-text: var(--creme); --band-titel: var(--kadmium); --akzent: var(--kadmium); }
-/* F: Nacht. Ganze Seite Preußisch, Schrift Creme, Titel im Band Kadmium */
-body.farbe-f { --logo-g: var(--kadmium); --logo-m: var(--kadmium); --grund: var(--preussisch); --text: var(--creme); --linie: rgba(236, 230, 214, .3); --dunkel: var(--nacht); --hell: var(--creme); --band-grund: var(--nacht); --band-text: var(--creme); --band-titel: var(--kadmium); --akzent: var(--kadmium); color-scheme: dark; }
-/* G: Zitron und Ultramarin (Farbwelt aus Runde 5). Band als Zitron-Fläche mit Anthrazit (10,4:1) */
-body.farbe-g { --grund: var(--papier); --text: var(--ultramarin); --linie: rgba(43, 68, 194, .3); --dunkel: var(--ultramarin); --hell: var(--papier); --band-grund: var(--zitron); --band-text: var(--anthrazit); --band-titel: var(--anthrazit); --akzent: var(--zitron); }
-/* H: Schwarz auf Papier, ganz ohne Farbe */
-body.farbe-h { --grund: var(--papier); --text: var(--schwarz); --linie: rgba(20, 20, 20, .3); --dunkel: var(--schwarz); --hell: var(--papier); --band-grund: var(--schwarz); --band-text: var(--papier); --band-titel: var(--papier); --akzent: var(--papier); }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 body { font-family: var(--schrift); font-stretch: 100%; font-size: 17px; line-height: 1.5; background: var(--grund); color: var(--text); }
+body.menue-offen { overflow: hidden; }
 h1, h2, h3 { font-weight: inherit; font-size: inherit; }
 .platzhalter { opacity: .5; }
 
@@ -67,42 +45,34 @@ h1, h2, h3 { font-weight: inherit; font-size: inherit; }
 .mittel { font-size: clamp(38px, 5vw, 90px); }
 .etikett { font-weight: 700; font-stretch: 80%; text-transform: uppercase; letter-spacing: .07em; font-size: 12px; }
 .klein { font-size: 15px; line-height: 1.45; max-width: 40ch; }
-.weiter { display: inline-block; align-self: flex-start; text-decoration: none; font-weight: 700; font-stretch: 80%; text-transform: uppercase; letter-spacing: .07em; font-size: 13px; border-bottom: 2px solid currentColor; padding-bottom: 2px; white-space: nowrap; }
+.weiter { display: inline-block; align-self: flex-start; text-decoration: none; font-weight: 700; font-stretch: 80%; text-transform: uppercase; letter-spacing: .07em; font-size: 13px; white-space: nowrap; border: 2px solid currentColor; padding: 7px 11px 6px; }
 .senkrecht { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
 
-/* Kopf dunkel mit heller Schrift: trennt Logo und Menü klar von der lauten Überschrift */
-.kopf { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 22px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); background: var(--dunkel); color: var(--hell); }
-.kopf .marke img { height: 72px; width: auto; }
-.kopf, .fuss { --logo-oben: var(--logo-g, var(--hell)); --logo-unten: var(--logo-m, var(--hell)); --logo-fuge: var(--dunkel); }
-/* Kopf-Varianten zum Vergleichen (Prototyp): 1 wie bisher, 2 flach mit Fuge, 3 flach mit Absenderzeile, 4 flach im Kasten */
-.kopf .marke { display: flex; align-items: center; gap: 16px; text-decoration: none; }
-.kopf .flach { display: none; height: 64px; }
-.kopf .flach svg { height: 100%; width: auto; display: block; }
-.kopf .absender { display: none; line-height: 1.35; }
-body.kopf-2 .kopf .marke img, body.kopf-3 .kopf .marke img, body.kopf-4 .kopf .marke img { display: none; }
-body.kopf-2 .kopf .flach, body.kopf-3 .kopf .flach, body.kopf-4 .kopf .flach { display: block; }
-body.kopf-3 .kopf .absender { display: block; border-left: 2px solid currentColor; padding-left: 14px; }
-body.kopf-4 .kopf .marke { border: 2px solid currentColor; padding: 8px 14px 8px 10px; }
-body.kopf-4 .kopf .absender { display: block; }
-/* Stempel-Stil: kleine Texte und Links sitzen in geraden Kästen wie der Stempel oben und der Werkstempel */
-body.kopf-4 .weiter { border: 2px solid currentColor; padding: 7px 11px 6px; }
-body.kopf-4 .start .unterzeile { border: 2px solid currentColor; padding: 12px 14px; align-self: end; margin-bottom: .6em; }
-body.kopf-4 .start-bild figcaption span, body.kopf-4 .schichten figcaption, body.kopf-4 .seitenkopf .etikett { display: inline-block; border: 2px solid currentColor; padding: 5px 9px; }
-body.kopf-4 .beobachtung { border-top: 0; }
-body.kopf-4 .beobachtung h3 { display: inline-block; border: 2px solid currentColor; padding: .3em .4em .22em; line-height: .9; }
+/* Kästen */
+.start .unterzeile { border: 2px solid currentColor; padding: 12px 14px; align-self: end; margin-bottom: .6em; }
+.start-bild figcaption span, .schichten figcaption, .seitenkopf .etikett { display: inline-block; border: 2px solid currentColor; padding: 5px 9px; }
+.beobachtung h3 { display: inline-block; border: 2px solid currentColor; padding: .3em .4em .22em; line-height: .9; }
+
+/* Kopf: dunkel, Logo flach im Kasten mit Zeile, Menü rechts */
+.kopf { position: relative; z-index: 20; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 22px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); background: var(--dunkel); color: var(--hell); }
+.kopf, .fuss { --logo-oben: var(--kadmium); --logo-unten: var(--hell); --logo-fuge: var(--dunkel); }
+.kopf .marke { display: flex; align-items: center; gap: 14px; text-decoration: none; border: 2px solid currentColor; padding: 8px 14px 8px 10px; flex: none; }
+.kopf .flach { display: block; height: 64px; }
+.kopf .flach svg, .kopf .flach img { height: 100%; width: auto; display: block; }
+.kopf .absender { line-height: 1.35; white-space: nowrap; }
 .kopf nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 26px; }
 .kopf nav a { text-decoration: none; padding: 3px 0; border-bottom: 2px solid transparent; }
 .kopf nav a:hover, .kopf nav a[aria-current] { border-bottom-color: var(--akzent); }
+.menue-knopf { display: none; font: inherit; color: inherit; background: none; border: 2px solid currentColor; padding: 9px 12px; cursor: pointer; align-items: center; gap: 10px; }
+.menue-knopf .striche { display: grid; gap: 4px; width: 20px; }
+.menue-knopf .striche i { display: block; height: 2px; background: currentColor; }
 main { padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-top: clamp(40px, 5vw, 80px); }
 .ansicht[hidden] { display: none; }
 /* Fuß: das Logo noch einmal groß, über die volle Breite, wie eine Signatur am Ende */
 .fuss { background: var(--dunkel); color: var(--hell); margin-top: 120px; padding-block: clamp(40px, 6vw, 88px) 32px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
 .fuss .gross-logo { width: 100%; height: auto; }
-.fuss .fuss-satz { font-size: clamp(32px, 4.4vw, 76px); margin-top: clamp(20px, 3vw, 40px); color: var(--logo-g, var(--hell)); }
+.fuss .fuss-satz { font-size: clamp(32px, 4.4vw, 76px); margin-top: clamp(20px, 3vw, 40px); color: var(--kadmium); }
 .fuss .zeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: clamp(28px, 4vw, 56px); }
-.farbschalter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.farbschalter button { font: inherit; background: none; color: inherit; border: 1px dashed currentColor; padding: 4px 9px; cursor: pointer; }
-.farbschalter button[aria-pressed="true"] { background: var(--hell); color: var(--dunkel); border-style: solid; }
 
 section + section { margin-top: 120px; }
 
@@ -121,10 +91,10 @@ section + section { margin-top: 120px; }
 .reihe-bilder img { height: clamp(180px, 26vw, 400px); width: auto; }
 
 /* Werkstatt: Band in Anthrazit, vier Beobachtungen ohne Nummern (keine feste Reihenfolge) */
-.band { --linie: rgba(128, 128, 128, .45); background: var(--band-grund); color: var(--band-text); margin-left: calc(-1 * var(--gutter-l)); margin-right: calc(-1 * var(--gutter-r)); padding-block: 80px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.band { --linie: rgba(236, 230, 214, .3); background: var(--dunkel); color: var(--hell); margin-left: calc(-1 * var(--gutter-l)); margin-right: calc(-1 * var(--gutter-r)); padding-block: 80px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
 .werkstatt-kopf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: 56px; }
 .beobachtungen { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
-.band .plakat { color: var(--band-titel); }
+.band .plakat { color: var(--kadmium); }
 .beobachtung { border-top: 2px solid var(--linie); padding-top: 14px; }
 .beobachtung h3 { margin-bottom: 14px; font-size: clamp(32px, 3.2vw, 52px); }
 .beobachtung p { font-size: 15px; line-height: 1.45; }
@@ -170,9 +140,19 @@ section + section { margin-top: 120px; }
 
 @media screen and (max-width: 800px) {
   body { font-size: 16px; }
-  .kopf { align-items: flex-start; padding-block: 18px 24px; }
-  .kopf .marke img { height: 46px; }
-  .kopf nav { gap: 2px 14px; font-size: 13px; }
+  .kopf { padding-block: 12px; gap: 12px; }
+  .kopf .marke { padding: 6px 10px 6px 7px; gap: 10px; }
+  .kopf .flach { height: 40px; }
+  .kopf .absender { font-size: 10px; }
+  .menue-knopf { display: flex; }
+  /* Menü als Vollbild-Tafel, große Wörter wie die Überschriften */
+  .kopf nav { display: none; position: fixed; inset: 0; z-index: 30; background: var(--dunkel); flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px;
+    padding: calc(env(safe-area-inset-top, 0px) + 90px) var(--gutter-r) calc(env(safe-area-inset-bottom, 0px) + 40px) var(--gutter-l); }
+  .menue-offen .kopf nav { display: flex; }
+  .menue-offen .kopf .menue-knopf { position: fixed; z-index: 31; top: calc(env(safe-area-inset-top, 0px) + 14px); right: var(--gutter-r); }
+  .kopf nav a { font-size: clamp(52px, 16vw, 84px); font-stretch: 60%; font-weight: 900; line-height: .95; letter-spacing: 0; border-bottom: 0; }
+  .kopf nav a[aria-current] { color: var(--kadmium); }
+  .fuss .fuss-satz { font-size: 30px; }
   .start { grid-template-columns: 1fr; }
   .start h1, .start .unterzeile { grid-column: 1; }
   .ueber, .werk, .werkstatt-kopf, .anfrage-zeile { grid-template-columns: 1fr; }
@@ -191,8 +171,9 @@ section + section { margin-top: 120px; }
 </head>
 <body>
 <header class="kopf">
-  <a class="marke" href="#start" aria-label="Goldmann &amp; Morawetz, Startseite"><img class="logo-fassung" src="logo/goldmann-morawetz_creme.svg" alt=""><span class="flach" aria-hidden="true"></span><span class="absender etikett">Zwei malen.<br>Ein Bild.</span></a>
-  <nav aria-label="Hauptmenü" class="etikett">
+  <a class="marke" href="#start" aria-label="Goldmann &amp; Morawetz, Startseite"><span class="flach" aria-hidden="true"></span><span class="absender etikett">Zwei malen.<br>Ein Bild.</span></a>
+  <button type="button" class="menue-knopf etikett" aria-expanded="false" aria-controls="hauptmenue"><span class="striche" aria-hidden="true"><i></i><i></i><i></i></span><span class="menue-wort">Menü</span></button>
+  <nav aria-label="Hauptmenü" id="hauptmenue" class="etikett">
     <a href="#start" data-ziel="start">Start</a>
     <a href="#werke" data-ziel="werke">Werke</a>
     <a href="#werkstatt" data-ziel="werkstatt">Werkstatt</a>
@@ -249,8 +230,8 @@ section + section { margin-top: 120px; }
       <div>
         <h2 class="plakat gross">Über<br>uns</h2>
         <div class="text" style="margin-top:28px;max-width:44ch">
-          <p class="auftakt">Zwei Maler, ein Bild. Meistens gleichzeitig.</p>
-          <p class="klein">Wir kennen uns ein halbes Leben. Zusammen malen wir seit 2020, heute in unserer Werkstatt im 6. Bezirk.</p>
+          <p class="auftakt">Gemalt zu zweit. Übermalt zu zweit.</p>
+          <p class="klein">Wir kennen uns ein halbes Leben und teilen uns fast genauso lang eine Band. Seit 2020 malen wir auch zusammen.</p>
         </div>
         <a class="weiter" href="#ueber-uns" style="margin-top:18px">Weiterlesen</a>
       </div>
@@ -304,12 +285,13 @@ section + section { margin-top: 120px; }
     </div>
     <div class="ueber" style="align-items:start">
       <div class="text">
-        <p class="auftakt">Zwei Maler, ein Bild. Meistens gleichzeitig.</p>
-        <p>Wir kennen uns ein halbes Leben. Gemalt hat jeder von uns schon lange, zusammen tun wir es seit 2020. Die erste Session war bei Bruno zu Hause: Karton am Boden, riesige Bilder, mehrere Tage. Seitdem hören wir nicht mehr auf.</p>
-        <p>Heute malen wir in unserer Werkstatt im 6. Bezirk. Auf der einen Seite die Musik, auf der anderen die Bilder, dazwischen zwei Campingstühle.</p>
-        <p>Einen Plan gibt es selten. Wir malen, setzen uns, schauen, und irgendwann sieht einer etwas, das keiner bestellt hat.</p>
-        <p>Unter den meisten Bildern liegen zwanzig, dreißig, vierzig andere. Manchmal verschwindet dabei die schönste Stelle. Gemerkt hat es keiner.</p>
-        <p>Patrick will immer noch eine Schicht. Bruno lässt ein Bild früher in Ruhe. Allein würde jeder von uns anders malen. Zusammen wird daraus etwas, das keinem allein gehört.</p>
+        <p class="auftakt">Gemalt zu zweit. Übermalt zu zweit.</p>
+        <p>Wir kennen uns ein halbes Leben und teilen uns fast genauso lang eine Band. Gemalt haben wir beide schon immer, in dieser Form gemeinsam aber erst seit 2020: Die erste Session war bei Bruno zu Hause, mit Karton am Boden und sehr vielen Leinwänden, mehrere Tage lang. Seitdem kommen wir nicht mehr davon los.</p>
+        <p>Heute malen wir in unserer Werkstatt im 6. Bezirk, die zugleich unser Proberaum ist: eine Hälfte Musik, die andere Malerei, dazwischen ein paar Campingstühle.</p>
+        <p>Einen Plan gibt es selten. Meistens malen wir gleichzeitig am selben Bild, manchmal auch jeder an einem eigenen, und dann tauschen wir. Am Ende ist jedes ein gemeinsames Bild, egal wie es angefangen hat.</p>
+        <p>Zwischendurch setzen wir uns mit etwas Abstand vor das Bild und schauen es an, bis einer von uns etwas entdeckt, das vorher keinem aufgefallen ist. Dann steht er auf und malt daran weiter, und meist dauert es nicht lange, bis der andere wieder mitmalt. So geht es hin und her: schauen, entdecken, malen, und wieder von vorn.</p>
+        <p>Was der andere mühsam gemalt hat, lassen wir meistens stehen, aber eben nur meistens. So wächst ein Bild Schicht für Schicht, und unter den meisten liegen viele andere, die keiner mehr sieht. Manchmal verschwindet dabei ausgerechnet die schönste Stelle, und wir merken es erst, wenn sie schon weg ist.</p>
+        <p>Patrick will immer noch eine Schicht, Bruno lässt ein Bild früher in Ruhe. Allein würde jeder von uns ganz anders malen. Zusammen entsteht etwas, das keiner von uns allein gemalt hätte.</p>
         <p>Fertig wird nichts. Irgendwann erklären wir es für fertig.</p>
       </div>
       <img src="bilder/img-1164-stimmung.jpg" alt="Malen an einem orangen Bild">
@@ -331,7 +313,7 @@ section + section { margin-top: 120px; }
 </main>
 
 <footer class="fuss etikett">
-  <img class="gross-logo logo-fassung" src="logo/goldmann-morawetz_creme.svg" alt="Goldmann &amp; Morawetz">
+  <img class="gross-logo" src="logo/goldmann-morawetz_zwei-namen.svg" alt="Goldmann &amp; Morawetz">
   <p class="plakat fuss-satz">Für fertig erklärt in Wien.</p>
   <div class="zeile">
     <span>Werkstatt im 6. Bezirk, Wien</span>
@@ -340,23 +322,6 @@ section + section { margin-top: 120px; }
   </div>
   <div class="zeile">
     <span>Prototyp, Stand 6. November 2026 · Platzhalter in eckigen Klammern</span>
-    <span class="farbschalter" role="group" aria-label="Farbfassung zum Vergleichen">Farbe:
-      <button type="button" data-farbe="a" aria-pressed="false">A Anthrazit</button>
-      <button type="button" data-farbe="b" aria-pressed="false">B Orange/Preußisch</button>
-      <button type="button" data-farbe="c" aria-pressed="false">C Orange/Ultramarin</button>
-      <button type="button" data-farbe="d" aria-pressed="false">D Orange-Flächen</button>
-      <button type="button" data-farbe="e" aria-pressed="false">E Zwei Namen</button>
-      <button type="button" data-farbe="f" aria-pressed="false">F Nacht</button>
-      <button type="button" data-farbe="g" aria-pressed="false">G Zitron/Ultramarin</button>
-      <button type="button" data-farbe="h" aria-pressed="false">H Schwarz/Papier</button>
-    </span>
-    <span class="farbschalter" role="group" aria-label="Logo im Kopf zum Vergleichen">Logo oben:
-      <button type="button" data-kopf="1" aria-pressed="false">1 Wie bisher</button>
-      <button type="button" data-kopf="2" aria-pressed="false">2 Flach</button>
-      <button type="button" data-kopf="3" aria-pressed="false">3 Flach + Zeile</button>
-      <button type="button" data-kopf="4" aria-pressed="false">4 Stempel</button>
-    </span>
-
   </div>
 </footer>
 
@@ -432,32 +397,20 @@ function zeige() {
   document.querySelectorAll(".kopf nav a").forEach(a => a.toggleAttribute("aria-current", a.dataset.ziel === aktiv));
   window.scrollTo(0, 0);
 }
-// Prototyp: Farbfassungen vergleichen. Logo-Fassung passend zur dunklen Fläche.
-const LOGO = { a: "creme", b: "kadmium", c: "creme", d: "anthrazit", e: "zwei-namen", f: "kadmium", g: "creme", h: "creme" };
-function farbe(f) {
-  document.body.classList.remove(...Object.keys(LOGO).map(k => "farbe-" + k));
-  if (f !== "a") document.body.classList.add("farbe-" + f);
-  document.querySelectorAll(".logo-fassung").forEach(img => img.src = `logo/goldmann-morawetz_${LOGO[f]}.svg`);
-  document.querySelectorAll("[data-farbe]").forEach(b => b.setAttribute("aria-pressed", b.dataset.farbe === f));
-  try { localStorage.setItem("gm-farbe-2", f); } catch (e) {}
-}
-document.querySelectorAll("[data-farbe]").forEach(b => b.addEventListener("click", () => farbe(b.dataset.farbe)));
-let gespeichert = null;
-try { gespeichert = localStorage.getItem("gm-farbe-2"); } catch (e) {}
-farbe(gespeichert && LOGO[gespeichert] ? gespeichert : "e");
-
-// Prototyp: Logo im Kopf. Die flache Fassung wird als Datei geladen und eingebettet, damit sie die Seitenfarben übernimmt.
+// Kopf: flache Logo-Fassung als Datei laden und einbetten, damit sie die Seitenfarben übernimmt
 fetch("logo/goldmann-morawetz_flach.svg").then(r => r.text()).then(t => document.querySelector(".kopf .flach").innerHTML = t)
-  .catch(() => document.querySelector(".kopf .flach").innerHTML = '<img src="logo/goldmann-morawetz_zwei-namen.svg" alt="" style="height:100%;width:auto">');
-function kopf(k) {
-  ["1", "2", "3", "4"].forEach(n => document.body.classList.toggle("kopf-" + n, n === k && n !== "1"));
-  document.querySelectorAll("[data-kopf]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kopf === k));
-  try { localStorage.setItem("gm-kopf-2", k); } catch (e) {}
+  .catch(() => document.querySelector(".kopf .flach").innerHTML = '<img src="logo/goldmann-morawetz_zwei-namen.svg" alt="">');
+
+// Handy: Menü-Knopf öffnet die Vollbild-Tafel, ein Klick auf einen Eintrag schließt sie
+const knopf = document.querySelector(".menue-knopf");
+function menue(offen) {
+  document.body.classList.toggle("menue-offen", offen);
+  knopf.setAttribute("aria-expanded", offen);
+  knopf.querySelector(".menue-wort").textContent = offen ? "Schließen" : "Menü";
 }
-document.querySelectorAll("[data-kopf]").forEach(b => b.addEventListener("click", () => kopf(b.dataset.kopf)));
-let kopfGespeichert = null;
-try { kopfGespeichert = localStorage.getItem("gm-kopf-2"); } catch (e) {}
-kopf(kopfGespeichert || "4");
+knopf.addEventListener("click", () => menue(!document.body.classList.contains("menue-offen")));
+document.querySelectorAll(".kopf nav a").forEach(a => a.addEventListener("click", () => menue(false)));
+document.addEventListener("keydown", e => { if (e.key === "Escape") menue(false); });
 
 window.addEventListener("hashchange", zeige);
 zeige();
