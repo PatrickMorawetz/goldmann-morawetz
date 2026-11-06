@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goldmann &amp; Morawetz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&display=swap" rel="stylesheet">
+<style>
+/* Goldmann & Morawetz · Website-Prototyp
+   Leitidee: laut durch Maß, nicht durch Wackeln. Das Bild steht im Zentrum, das Logo ist das
+   einzige unregelmäßige Element. Anybody: schmal und schwarz für Überschriften, normal für Text.
+   Nur Anthrazit und Creme; Farbe kommt aus den Bildern. Text arbeitet auch mit Lage (90 Grad). */
+:root {
+  --creme: #ECE6D6;
+  --anthrazit: #2B2A28;
+  --papier: #FAFAF8;
+  --preussisch: #10304D;
+  --ultramarin: #2B44C2;
+  --kadmium: #E07A12;
+  --schwarz: #141414;
+  --zitron: #E8E04A;
+  --nacht: #0B2236;
+  /* Rollen: Fassung A (Anthrazit/Creme) ist Standard, B und C über den Prototyp-Schalter */
+  --grund: var(--creme);
+  --text: var(--anthrazit);
+  --linie: rgba(43, 42, 40, .3);
+  --dunkel: var(--anthrazit);
+  --hell: var(--creme);
+  --band-grund: var(--anthrazit);
+  --band-text: var(--creme);
+  --band-titel: var(--creme);
+  --akzent: currentColor;
+  --schrift: "Anybody", "Helvetica Neue", Arial, sans-serif;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px), 3vw);
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px), 3vw);
+  color-scheme: light;
+}
+/* B: Papier, Preußisch, Kadmium. Orange nur groß auf Preußisch (4,5:1), auf Papier fällt es durch (2,9:1). */
+body.farbe-b { --logo-g: var(--kadmium); --logo-m: var(--kadmium); --grund: var(--papier); --text: var(--preussisch); --linie: rgba(16, 48, 77, .3); --dunkel: var(--preussisch); --hell: var(--papier); --band-grund: var(--preussisch); --band-text: var(--papier); --band-titel: var(--kadmium); --akzent: var(--kadmium); }
+/* C: Papier, Ultramarin, Kadmium. Werkstatt-Band als Kadmium-Fläche mit dunkler Schrift (5,5:1). */
+body.farbe-c { --grund: var(--papier); --text: var(--ultramarin); --linie: rgba(43, 68, 194, .3); --dunkel: var(--ultramarin); --hell: var(--papier); --band-grund: var(--kadmium); --band-text: var(--anthrazit); --band-titel: var(--anthrazit); --akzent: var(--kadmium); }
+/* D: Papier, Anthrazit, Kadmium-Flächen im Kopf und Fuß (Anthrazit auf Kadmium 4,75:1) */
+body.farbe-d { --grund: var(--papier); --text: var(--anthrazit); --dunkel: var(--kadmium); --hell: var(--anthrazit); --band-grund: var(--anthrazit); --band-text: var(--creme); --band-titel: var(--kadmium); --akzent: var(--anthrazit); }
+/* E: Zwei Namen. Creme, Schwarz, Kadmium wie die Logo-Fassung „zwei Namen“ */
+body.farbe-e { --logo-g: var(--kadmium); --grund: var(--creme); --text: var(--schwarz); --linie: rgba(20, 20, 20, .3); --dunkel: var(--schwarz); --hell: var(--creme); --band-grund: var(--schwarz); --band-text: var(--creme); --band-titel: var(--kadmium); --akzent: var(--kadmium); }
+/* F: Nacht. Ganze Seite Preußisch, Schrift Creme, Titel im Band Kadmium */
+body.farbe-f { --logo-g: var(--kadmium); --logo-m: var(--kadmium); --grund: var(--preussisch); --text: var(--creme); --linie: rgba(236, 230, 214, .3); --dunkel: var(--nacht); --hell: var(--creme); --band-grund: var(--nacht); --band-text: var(--creme); --band-titel: var(--kadmium); --akzent: var(--kadmium); color-scheme: dark; }
+/* G: Zitron und Ultramarin (Farbwelt aus Runde 5). Band als Zitron-Fläche mit Anthrazit (10,4:1) */
+body.farbe-g { --grund: var(--papier); --text: var(--ultramarin); --linie: rgba(43, 68, 194, .3); --dunkel: var(--ultramarin); --hell: var(--papier); --band-grund: var(--zitron); --band-text: var(--anthrazit); --band-titel: var(--anthrazit); --akzent: var(--zitron); }
+/* H: Schwarz auf Papier, ganz ohne Farbe */
+body.farbe-h { --grund: var(--papier); --text: var(--schwarz); --linie: rgba(20, 20, 20, .3); --dunkel: var(--schwarz); --hell: var(--papier); --band-grund: var(--schwarz); --band-text: var(--papier); --band-titel: var(--papier); --akzent: var(--papier); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+body { font-family: var(--schrift); font-stretch: 100%; font-size: 17px; line-height: 1.5; background: var(--grund); color: var(--text); }
+h1, h2, h3 { font-weight: inherit; font-size: inherit; }
+.platzhalter { opacity: .5; }
+
+/* Typo: schmal, schwarz, eng. Drei Stufen mit starkem Größenkontrast (Grundlagen 7.8) */
+.plakat { font-stretch: 60%; font-weight: 900; text-transform: uppercase; line-height: .82; letter-spacing: -.004em; text-wrap: balance; }
+.riesig { font-size: clamp(70px, 13vw, 240px); }
+.gross { font-size: clamp(56px, 9vw, 170px); }
+.mittel { font-size: clamp(38px, 5vw, 90px); }
+.etikett { font-weight: 700; font-stretch: 80%; text-transform: uppercase; letter-spacing: .07em; font-size: 12px; }
+.klein { font-size: 15px; line-height: 1.45; max-width: 40ch; }
+.weiter { display: inline-block; align-self: flex-start; text-decoration: none; font-weight: 700; font-stretch: 80%; text-transform: uppercase; letter-spacing: .07em; font-size: 13px; border-bottom: 2px solid currentColor; padding-bottom: 2px; white-space: nowrap; }
+.senkrecht { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+
+/* Kopf dunkel mit heller Schrift: trennt Logo und Menü klar von der lauten Überschrift */
+.kopf { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 22px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); background: var(--dunkel); color: var(--hell); }
+.kopf .marke img { height: 72px; width: auto; }
+.kopf, .fuss { --logo-oben: var(--logo-g, var(--hell)); --logo-unten: var(--logo-m, var(--hell)); --logo-fuge: var(--dunkel); }
+/* Kopf-Varianten zum Vergleichen (Prototyp): 1 wie bisher, 2 flach mit Fuge, 3 flach mit Absenderzeile, 4 flach im Kasten */
+.kopf .marke { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.kopf .flach { display: none; height: 64px; }
+.kopf .flach svg { height: 100%; width: auto; display: block; }
+.kopf .absender { display: none; line-height: 1.35; }
+body.kopf-2 .kopf .marke img, body.kopf-3 .kopf .marke img, body.kopf-4 .kopf .marke img { display: none; }
+body.kopf-2 .kopf .flach, body.kopf-3 .kopf .flach, body.kopf-4 .kopf .flach { display: block; }
+body.kopf-3 .kopf .absender { display: block; border-left: 2px solid currentColor; padding-left: 14px; }
+body.kopf-4 .kopf .marke { border: 2px solid currentColor; padding: 8px 14px 8px 10px; }
+body.kopf-4 .kopf .absender { display: block; }
+/* Stempel-Stil: kleine Texte und Links sitzen in geraden Kästen wie der Stempel oben und der Werkstempel */
+body.kopf-4 .weiter { border: 2px solid currentColor; padding: 7px 11px 6px; }
+body.kopf-4 .start .unterzeile { border: 2px solid currentColor; padding: 12px 14px; align-self: end; margin-bottom: .6em; }
+body.kopf-4 .start-bild figcaption span, body.kopf-4 .schichten figcaption, body.kopf-4 .seitenkopf .etikett { display: inline-block; border: 2px solid currentColor; padding: 5px 9px; }
+body.kopf-4 .beobachtung { border-top: 0; }
+body.kopf-4 .beobachtung h3 { display: inline-block; border: 2px solid currentColor; padding: .3em .4em .22em; line-height: .9; }
+.kopf nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 26px; }
+.kopf nav a { text-decoration: none; padding: 3px 0; border-bottom: 2px solid transparent; }
+.kopf nav a:hover, .kopf nav a[aria-current] { border-bottom-color: var(--akzent); }
+main { padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-top: clamp(40px, 5vw, 80px); }
+.ansicht[hidden] { display: none; }
+/* Fuß: das Logo noch einmal groß, über die volle Breite, wie eine Signatur am Ende */
+.fuss { background: var(--dunkel); color: var(--hell); margin-top: 120px; padding-block: clamp(40px, 6vw, 88px) 32px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.fuss .gross-logo { width: 100%; height: auto; }
+.fuss .fuss-satz { font-size: clamp(32px, 4.4vw, 76px); margin-top: clamp(20px, 3vw, 40px); color: var(--logo-g, var(--hell)); }
+.fuss .zeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: clamp(28px, 4vw, 56px); }
+.farbschalter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.farbschalter button { font: inherit; background: none; color: inherit; border: 1px dashed currentColor; padding: 4px 9px; cursor: pointer; }
+.farbschalter button[aria-pressed="true"] { background: var(--hell); color: var(--dunkel); border-style: solid; }
+
+section + section { margin-top: 120px; }
+
+/* Start: ein Satz, eine Zeile Text, ein großes Bild aus der Werkstatt über die volle Breite */
+.start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 16px clamp(20px, 4vw, 64px); align-items: end; }
+.start h1 { grid-column: 1; }
+.start .unterzeile { grid-column: 2; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.35; padding-bottom: .4em; }
+.start-bild { grid-column: 1 / -1; margin-top: clamp(16px, 2.5vw, 36px); margin-left: calc(-1 * var(--gutter-l)); margin-right: calc(-1 * var(--gutter-r)); }
+.start-bild img { width: 100%; height: auto; max-height: 92vh; object-fit: cover; }
+.start-bild figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+
+/* Reihe mit senkrechtem Wort */
+.reihe { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: end; }
+.reihe-inhalt { display: flex; flex-direction: column; gap: 20px; }
+.reihe-bilder { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; }
+.reihe-bilder img { height: clamp(180px, 26vw, 400px); width: auto; }
+
+/* Werkstatt: Band in Anthrazit, vier Beobachtungen ohne Nummern (keine feste Reihenfolge) */
+.band { --linie: rgba(128, 128, 128, .45); background: var(--band-grund); color: var(--band-text); margin-left: calc(-1 * var(--gutter-l)); margin-right: calc(-1 * var(--gutter-r)); padding-block: 80px; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.werkstatt-kopf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: 56px; }
+.beobachtungen { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.band .plakat { color: var(--band-titel); }
+.beobachtung { border-top: 2px solid var(--linie); padding-top: 14px; }
+.beobachtung h3 { margin-bottom: 14px; font-size: clamp(32px, 3.2vw, 52px); }
+.beobachtung p { font-size: 15px; line-height: 1.45; }
+.atelier { display: flex; gap: 8px; overflow-x: auto; margin-top: 64px; scrollbar-width: thin; }
+.atelier img { height: clamp(200px, 28vw, 380px); width: auto; flex: none; }
+
+.ueber { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 64px); align-items: end; }
+.ueber img { width: 100%; height: auto; }
+.anfrage-zeile { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; }
+
+/* Werke an einer Wand: gemeinsame Unterkante wie gehängt */
+.seitenkopf { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 48px; }
+.wand { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 44px 36px; }
+.wand a { text-decoration: none; display: block; }
+.wand img { height: var(--hoehe, 250px); width: auto; }
+.schild { margin-top: 8px; display: flex; flex-direction: column; }
+.schild span + span { opacity: .65; font-size: 13px; }
+
+/* Werkseite */
+.werk { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.werk .bild img { width: 100%; height: auto; max-height: 84vh; object-fit: contain; object-position: left top; }
+.werk h1 { margin: 10px 0 24px; }
+.stempel { border: 2px solid var(--text); padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 3px 16px; font-size: 14px; margin: 0 0 28px; max-width: 360px; }
+.stempel span:nth-child(odd) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 700; align-self: center; }
+.stempel span.formel { grid-column: 1 / -1; font-size: 17px; font-weight: 800; text-transform: none; letter-spacing: 0; margin-top: 6px; border-top: 2px solid var(--text); padding-top: 6px; }
+.angaben { list-style: none; font-size: 15px; border-top: 2px solid var(--linie); margin-bottom: 28px; font-variant-numeric: tabular-nums; }
+.angaben li { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; border-bottom: 2px solid var(--linie); }
+.angaben li span:first-child { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 12px; align-self: center; }
+.anfrage { display: inline-block; background: var(--dunkel); color: var(--hell); text-decoration: none; padding: 14px 22px; font-weight: 800; font-stretch: 80%; text-transform: uppercase; letter-spacing: .06em; font-size: 14px; }
+.anfrage:hover { background: var(--grund); color: var(--text); outline: 2px solid var(--text); }
+.blaettern { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 56px; }
+
+.schichten { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.schichten img { width: 100%; height: auto; }
+.schichten figcaption { margin-top: 8px; }
+
+.text { max-width: 58ch; }
+.text p + p { margin-top: 1em; }
+.text .auftakt { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.25; font-weight: 700; }
+.adresse { font-size: 26px; margin-top: 28px; user-select: all; }
+.werkbezug { border: 2px solid var(--text); padding: 14px 16px; display: flex; gap: 16px; align-items: center; max-width: 520px; margin-top: 28px; }
+.werkbezug img { height: 90px; width: auto; }
+
+@media screen and (max-width: 800px) {
+  body { font-size: 16px; }
+  .kopf { align-items: flex-start; padding-block: 18px 24px; }
+  .kopf .marke img { height: 46px; }
+  .kopf nav { gap: 2px 14px; font-size: 13px; }
+  .start { grid-template-columns: 1fr; }
+  .start h1, .start .unterzeile { grid-column: 1; }
+  .ueber, .werk, .werkstatt-kopf, .anfrage-zeile { grid-template-columns: 1fr; }
+  .beobachtungen { grid-template-columns: 1fr 1fr; }
+  .reihe { grid-template-columns: 1fr; }
+  .reihe .senkrecht { writing-mode: horizontal-tb; transform: none; }
+  .wand { gap: 28px 18px; }
+  .wand img { height: calc(var(--hoehe, 250px) * .55); }
+  .schichten { grid-template-columns: 1fr; }
+}
+@media screen and (max-width: 480px) {
+  .beobachtungen { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+<header class="kopf">
+  <a class="marke" href="#start" aria-label="Goldmann &amp; Morawetz, Startseite"><img class="logo-fassung" src="logo/goldmann-morawetz_creme.svg" alt=""><span class="flach" aria-hidden="true"></span><span class="absender etikett">Zwei malen.<br>Ein Bild.</span></a>
+  <nav aria-label="Hauptmenü" class="etikett">
+    <a href="#start" data-ziel="start">Start</a>
+    <a href="#werke" data-ziel="werke">Werke</a>
+    <a href="#werkstatt" data-ziel="werkstatt">Werkstatt</a>
+    <a href="#ueber-uns" data-ziel="ueber-uns">Über uns</a>
+    <a href="#anfragen" data-ziel="anfragen">Anfragen</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- Start -->
+  <div class="ansicht" id="v-start">
+    <section class="start">
+      <h1 class="plakat riesig">Noch eine Schicht.</h1>
+      <p class="unterzeile">Zwei malen an einem Bild, oft gleichzeitig, bis keiner mehr weiß, von wem welcher Strich ist.</p>
+      <figure class="start-bild">
+        <img src="bilder/img-3049-stimmung.jpg" alt="In der Werkstatt: zwei Porträts, zwei Architekturbilder, dazwischen ein kleines Porträt an der Wand">
+        <figcaption class="etikett"><span>In der Werkstatt, 6. Bezirk</span><span>Bruno Goldmann &amp; Patrick Morawetz</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="reihe">
+      <h2 class="plakat gross senkrecht">Werke</h2>
+      <div class="reihe-inhalt">
+        <div class="reihe-bilder" id="auswahl"></div>
+        <a class="weiter" href="#werke">Alle 54 Werke</a>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="werkstatt-kopf">
+        <h2 class="plakat gross">Werk-<br>statt</h2>
+        <div>
+          <p class="klein">Unter den meisten Bildern liegen zwanzig bis vierzig andere. So kommen sie dorthin.</p>
+          <a class="weiter" href="#werkstatt" style="margin-top:14px">In die Werkstatt</a>
+        </div>
+      </div>
+      <div class="beobachtungen">
+        <div class="beobachtung"><h3 class="plakat">Anfangen</h3><p>Erst muss das Weiß weg. Ein Schwall Tinte, ein Batzen Acryl, dann geht’s los.</p></div>
+        <div class="beobachtung"><h3 class="plakat">Zu zweit</h3><p>Meistens malen wir gleichzeitig am selben Bild. Manchmal abwechselnd, manchmal nebeneinander an verschiedenen.</p></div>
+        <div class="beobachtung"><h3 class="plakat">Übermalen</h3><p>Was der andere mühsam gemalt hat, bleibt meistens stehen. Meistens. Dazwischen sitzen wir und schauen, bis einer etwas sieht, das keiner geplant hat.</p></div>
+        <div class="beobachtung"><h3 class="plakat">Für fertig erklärt</h3><p>Fertig wird ein Bild nie. Irgendwann erklären wir es für fertig.</p></div>
+      </div>
+      <div class="atelier" aria-label="Aus der Werkstatt">
+        <img src="bilder/img-1180-stimmung.jpg" alt="Werkstatt mit mehreren Bildern einer Session">
+        <img src="bilder/img-1164-stimmung.jpg" alt="Malen an einem orangen Bild">
+        <img src="bilder/img-3034-stimmung.jpg" alt="Malen in der Werkstatt, zwei Bilder auf Staffeleien">
+        <img src="bilder/img-1678-stimmung.jpg" alt="Werkstatt, Bilder an der Wand und am Boden">
+        <img src="bilder/img-3049-stimmung.jpg" alt="Werkstatt mit Porträt und Stadtbild">
+      </div>
+    </section>
+
+    <section class="ueber">
+      <div>
+        <h2 class="plakat gross">Über<br>uns</h2>
+        <div class="text" style="margin-top:28px;max-width:44ch">
+          <p class="auftakt">Zwei Maler, ein Bild. Meistens gleichzeitig.</p>
+          <p class="klein">Wir kennen uns ein halbes Leben. Zusammen malen wir seit 2020, heute in unserer Werkstatt im 6. Bezirk.</p>
+        </div>
+        <a class="weiter" href="#ueber-uns" style="margin-top:18px">Weiterlesen</a>
+      </div>
+      <img src="bilder/img-3034-stimmung.jpg" alt="In der Werkstatt">
+    </section>
+
+    <section class="anfrage-zeile">
+      <h2 class="plakat mittel">Nimm eins mit, bevor wir’s übermalen.</h2>
+      <a class="weiter" href="#anfragen">Anfragen</a>
+    </section>
+  </div>
+
+  <!-- Werke -->
+  <div class="ansicht" id="v-werke" hidden>
+    <div class="seitenkopf">
+      <h1 class="plakat riesig">Werke</h1>
+      <p class="etikett"><span id="werke-anzahl"></span> Bilder, gehängt wie an einer Wand</p>
+    </div>
+    <div class="wand" id="wand"></div>
+  </div>
+
+  <!-- Werkseite, wird per Skript gefüllt -->
+  <div class="ansicht" id="v-werk" hidden></div>
+
+  <!-- Werkstatt: Prozess und Zwischenstände -->
+  <div class="ansicht" id="v-werkstatt" hidden>
+    <div class="seitenkopf">
+      <h1 class="plakat riesig">Werk-<br>statt</h1>
+      <p class="klein">Unter einem fertigen Bild liegen oft zwanzig bis vierzig andere, mit Narben und Geschichten, die keiner sieht. Hier ein paar davon.</p>
+    </div>
+    <section>
+      <p class="etikett platzhalter" style="margin-bottom:12px">[Titel]</p>
+      <div class="schichten">
+        <figure><img src="bilder/img-1149-stimmung.jpg" alt="Zwischenstand in Gelb"><figcaption class="etikett">Früher, <span class="platzhalter">[Datum]</span></figcaption></figure>
+        <figure><img src="bilder/img-1164-stimmung.jpg" alt="Dasselbe Bild, in Orange übermalt"><figcaption class="etikett">Später, <span class="platzhalter">[Datum]</span></figcaption></figure>
+      </div>
+    </section>
+    <section>
+      <p class="etikett platzhalter" style="margin-bottom:12px">[Titel]</p>
+      <div class="schichten">
+        <figure><img src="bilder/img-3022-stimmung.jpg" alt="Zwischenstand, orange Lasur"><figcaption class="etikett">Früher, <span class="platzhalter">[Datum]</span></figcaption></figure>
+        <figure><img src="bilder/img-3023-stimmung.jpg" alt="Späterer Stand"><figcaption class="etikett">Später, <span class="platzhalter">[Datum]</span></figcaption></figure>
+      </div>
+    </section>
+  </div>
+
+  <!-- Über uns -->
+  <div class="ansicht" id="v-ueber-uns" hidden>
+    <div class="seitenkopf">
+      <h1 class="plakat riesig">Über<br>uns</h1>
+    </div>
+    <div class="ueber" style="align-items:start">
+      <div class="text">
+        <p class="auftakt">Zwei Maler, ein Bild. Meistens gleichzeitig.</p>
+        <p>Wir kennen uns ein halbes Leben. Gemalt hat jeder von uns schon lange, zusammen tun wir es seit 2020. Die erste Session war bei Bruno zu Hause: Karton am Boden, riesige Bilder, mehrere Tage. Seitdem hören wir nicht mehr auf.</p>
+        <p>Heute malen wir in unserer Werkstatt im 6. Bezirk. Auf der einen Seite die Musik, auf der anderen die Bilder, dazwischen zwei Campingstühle.</p>
+        <p>Einen Plan gibt es selten. Wir malen, setzen uns, schauen, und irgendwann sieht einer etwas, das keiner bestellt hat.</p>
+        <p>Unter den meisten Bildern liegen zwanzig, dreißig, vierzig andere. Manchmal verschwindet dabei die schönste Stelle. Gemerkt hat es keiner.</p>
+        <p>Patrick will immer noch eine Schicht. Bruno lässt ein Bild früher in Ruhe. Allein würde jeder von uns anders malen. Zusammen wird daraus etwas, das keinem allein gehört.</p>
+        <p>Fertig wird nichts. Irgendwann erklären wir es für fertig.</p>
+      </div>
+      <img src="bilder/img-1164-stimmung.jpg" alt="Malen an einem orangen Bild">
+    </div>
+  </div>
+
+  <!-- Anfragen -->
+  <div class="ansicht" id="v-anfragen" hidden>
+    <div class="seitenkopf">
+      <h1 class="plakat gross">Nimm eins mit, bevor wir’s übermalen.</h1>
+    </div>
+    <div class="text">
+      <p>Wir verkaufen, weil wir es lieben, es nicht lassen können und uns der Platz ausgeht. Schreib uns mit der Werknummer, wir melden uns mit Preis und allem Weiteren.</p>
+    </div>
+    <div id="werkbezug"></div>
+    <p class="adresse platzhalter">[E-MAIL]</p>
+  </div>
+
+</main>
+
+<footer class="fuss etikett">
+  <img class="gross-logo logo-fassung" src="logo/goldmann-morawetz_creme.svg" alt="Goldmann &amp; Morawetz">
+  <p class="plakat fuss-satz">Für fertig erklärt in Wien.</p>
+  <div class="zeile">
+    <span>Werkstatt im 6. Bezirk, Wien</span>
+    <span>Verkauf über Supersonic 343 · <span class="platzhalter">[Impressum, Datenschutz]</span></span>
+    <span class="platzhalter">[Instagram]</span>
+  </div>
+  <div class="zeile">
+    <span>Prototyp, Stand 6. November 2026 · Platzhalter in eckigen Klammern</span>
+    <span class="farbschalter" role="group" aria-label="Farbfassung zum Vergleichen">Farbe:
+      <button type="button" data-farbe="a" aria-pressed="false">A Anthrazit</button>
+      <button type="button" data-farbe="b" aria-pressed="false">B Orange/Preußisch</button>
+      <button type="button" data-farbe="c" aria-pressed="false">C Orange/Ultramarin</button>
+      <button type="button" data-farbe="d" aria-pressed="false">D Orange-Flächen</button>
+      <button type="button" data-farbe="e" aria-pressed="false">E Zwei Namen</button>
+      <button type="button" data-farbe="f" aria-pressed="false">F Nacht</button>
+      <button type="button" data-farbe="g" aria-pressed="false">G Zitron/Ultramarin</button>
+      <button type="button" data-farbe="h" aria-pressed="false">H Schwarz/Papier</button>
+    </span>
+    <span class="farbschalter" role="group" aria-label="Logo im Kopf zum Vergleichen">Logo oben:
+      <button type="button" data-kopf="1" aria-pressed="false">1 Wie bisher</button>
+      <button type="button" data-kopf="2" aria-pressed="false">2 Flach</button>
+      <button type="button" data-kopf="3" aria-pressed="false">3 Flach + Zeile</button>
+      <button type="button" data-kopf="4" aria-pressed="false">4 Stempel</button>
+    </span>
+
+  </div>
+</footer>
+
+<script>
+// Werkliste: nur Fotonummern sind echt; Titel, Maße usw. folgen mit der Werkliste.
+// Nicht aufgenommen, weil wohl doppelt fotografiert: 1730 (= 1305), 1671 (= 1326), 1672 (= 1375).
+const WERKE = ["3047", "1561", "1326", "0918", "0925", "1149", "1305", "1321", "1375", "1552", "1558", "1559", "1560", "1562", "1563", "1564", "1565", "1566", "1567", "1568", "1570", "1571", "1572", "1573", "1574", "1576", "1586", "1661", "1673", "1675", "1677", "1679", "1723", "1724", "1725", "1727", "1728", "1729", "1731", "1732", "1733", "1734", "1735", "1736", "1737", "1738", "1739", "1740", "1741", "1742", "1743", "3022", "3023", "3048"];
+const ATELIER = { "3047": "img-3049-stimmung.jpg", "1326": "img-1180-stimmung.jpg" };
+const AUSWAHL = ["1739", "3047", "1673", "1735"];
+const bild = nr => `bilder/img-${nr}-werk.jpg`;
+let angefragt = null;
+
+document.getElementById("auswahl").innerHTML = AUSWAHL.map(nr => `
+  <a href="#werk-${nr}"><img src="${bild(nr)}" alt="Werk, Foto ${nr}"></a>`).join("");
+document.getElementById("wand").innerHTML = WERKE.map(nr => `
+  <a href="#werk-${nr}"><img src="${bild(nr)}" loading="lazy" alt="Werk, Foto ${nr}"><div class="schild"><span class="etikett platzhalter">[Titel]</span><span>[Jahr] · [Maße]</span></div></a>`).join("");
+document.getElementById("werke-anzahl").textContent = WERKE.length;
+
+function werkseite(nr) {
+  const i = WERKE.indexOf(nr);
+  const vor = WERKE[(i - 1 + WERKE.length) % WERKE.length];
+  const nach = WERKE[(i + 1) % WERKE.length];
+  return `
+    <div class="werk">
+      <div class="bild"><img src="${bild(nr)}" alt="Werk, Foto ${nr}"></div>
+      <div>
+        <p class="etikett">Foto ${nr}</p>
+        <h1 class="plakat mittel platzhalter">[Titel]</h1>
+        <div class="stempel" aria-label="Werkstempel">
+          <span>Werk Nr.</span><span>[NR]</span>
+          <span>Gemalt ab</span><span>[JAHR]</span>
+          <span>Von</span><span>[G / M]</span>
+          <span class="formel">Für fertig erklärt am [DATUM]</span>
+        </div>
+        <ul class="angaben">
+          <li><span>Maße</span><span>[MASSE]</span></li>
+          <li><span>Technik</span><span>[TECHNIK]</span></li>
+          <li><span>Status</span><span>[verfügbar]</span></li>
+          <li><span>Preis</span><span>[PREIS] oder auf Anfrage</span></li>
+        </ul>
+        <a class="anfrage" href="#anfragen" data-werk="${nr}">Dieses Bild anfragen</a>
+      </div>
+    </div>
+    <section>
+      <h2 class="plakat mittel">Wie es entstand</h2>
+      <p class="text platzhalter" style="margin-top:20px">[GESCHICHTE: Session und Ort, womit es losging, was darunter liegt, ein Moment. Für fertig erklärt am …]</p>
+      ${ATELIER[nr] ? `<figure style="margin-top:32px"><img src="bilder/${ATELIER[nr]}" alt="Das Bild in der Werkstatt" style="max-height:70vh;width:auto"><figcaption class="etikett" style="margin-top:8px">In der Werkstatt, <span class="platzhalter">[Datum]</span></figcaption></figure>` : ""}
+    </section>
+    <nav class="blaettern" aria-label="Weitere Werke">
+      <a class="weiter" href="#werk-${vor}">← Voriges</a>
+      <a class="weiter" href="#werke">Alle Werke</a>
+      <a class="weiter" href="#werk-${nach}">Nächstes →</a>
+    </nav>`;
+}
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-werk]");
+  if (a) angefragt = a.dataset.werk;
+});
+
+function zeige() {
+  let ziel = location.hash.slice(1) || "start";
+  let nr = null;
+  if (ziel.startsWith("werk-")) { nr = ziel.slice(5); ziel = WERKE.includes(nr) ? "werk" : "werke"; }
+  if (!document.getElementById("v-" + ziel)) ziel = "start";
+  if (ziel === "werk") document.getElementById("v-werk").innerHTML = werkseite(nr);
+  if (ziel === "anfragen") {
+    document.getElementById("werkbezug").innerHTML = angefragt
+      ? `<div class="werkbezug"><img src="${bild(angefragt)}" alt=""><span><span class="etikett">Deine Anfrage zu Werk [NR]</span><br><span style="font-size:13px;opacity:.65">Foto ${angefragt}</span></span></div>` : "";
+  }
+  document.querySelectorAll(".ansicht").forEach(v => v.hidden = v.id !== "v-" + ziel);
+  const aktiv = ziel === "werk" ? "werke" : ziel;
+  document.querySelectorAll(".kopf nav a").forEach(a => a.toggleAttribute("aria-current", a.dataset.ziel === aktiv));
+  window.scrollTo(0, 0);
+}
+// Prototyp: Farbfassungen vergleichen. Logo-Fassung passend zur dunklen Fläche.
+const LOGO = { a: "creme", b: "kadmium", c: "creme", d: "anthrazit", e: "zwei-namen", f: "kadmium", g: "creme", h: "creme" };
+function farbe(f) {
+  document.body.classList.remove(...Object.keys(LOGO).map(k => "farbe-" + k));
+  if (f !== "a") document.body.classList.add("farbe-" + f);
+  document.querySelectorAll(".logo-fassung").forEach(img => img.src = `logo/goldmann-morawetz_${LOGO[f]}.svg`);
+  document.querySelectorAll("[data-farbe]").forEach(b => b.setAttribute("aria-pressed", b.dataset.farbe === f));
+  try { localStorage.setItem("gm-farbe-2", f); } catch (e) {}
+}
+document.querySelectorAll("[data-farbe]").forEach(b => b.addEventListener("click", () => farbe(b.dataset.farbe)));
+let gespeichert = null;
+try { gespeichert = localStorage.getItem("gm-farbe-2"); } catch (e) {}
+farbe(gespeichert && LOGO[gespeichert] ? gespeichert : "e");
+
+// Prototyp: Logo im Kopf. Die flache Fassung wird als Datei geladen und eingebettet, damit sie die Seitenfarben übernimmt.
+fetch("logo/goldmann-morawetz_flach.svg").then(r => r.text()).then(t => document.querySelector(".kopf .flach").innerHTML = t)
+  .catch(() => document.querySelector(".kopf .flach").innerHTML = '<img src="logo/goldmann-morawetz_zwei-namen.svg" alt="" style="height:100%;width:auto">');
+function kopf(k) {
+  ["1", "2", "3", "4"].forEach(n => document.body.classList.toggle("kopf-" + n, n === k && n !== "1"));
+  document.querySelectorAll("[data-kopf]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kopf === k));
+  try { localStorage.setItem("gm-kopf-2", k); } catch (e) {}
+}
+document.querySelectorAll("[data-kopf]").forEach(b => b.addEventListener("click", () => kopf(b.dataset.kopf)));
+let kopfGespeichert = null;
+try { kopfGespeichert = localStorage.getItem("gm-kopf-2"); } catch (e) {}
+kopf(kopfGespeichert || "4");
+
+window.addEventListener("hashchange", zeige);
+zeige();
+</script>
+</body>
+</html>
